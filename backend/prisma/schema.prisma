@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   
+  bookings  Booking[]
+  createdAt DateTime @default(now())
+}
+
+model Movie {
+  id        Int      @id @default(autoincrement())
+  title     String
+  duration  Int      
+  sessions  Session[]
+}
+
+model Session {
+  id            Int      @id @default(autoincrement())
+  movieId       Int
+  movie         Movie    @relation(fields: [movieId], references: [id])
+  startTime     DateTime
+  totalRows     Int
+  seatsPerRow   Int
+  seats         Seat[]
+  bookings      Booking[]
+}
+
+model Seat {
+  id         Int      @id @default(autoincrement())
+  sessionId  Int
+  session    Session  @relation(fields: [sessionId], references: [id])
+  row        Int
+  seatNumber Int
+  status     String   @default("available")
+  booking    Booking? @relation(fields: [bookingId], references: [id])
+  bookingId  Int?
+}
+
+model Booking {
+  id               Int      @id @default(autoincrement())
+  sessionId        Int
+  session          Session  @relation(fields: [sessionId], references: [id])
+  userId           Int
+  user             User     @relation(fields: [userId], references: [id])
+  seats            Seat[]
+  status           String   @default("reserved") 
+  reservationExpiry DateTime? 
+  createdAt        DateTime @default(now())
+}
