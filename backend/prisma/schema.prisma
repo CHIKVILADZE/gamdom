@@ -41,8 +41,8 @@ model Seat {
   row        Int
   seatNumber Int
   status     String   @default("available")
-  booking    Booking? @relation(fields: [bookingId], references: [id])
   bookingId  Int?
+  booking    Booking? @relation(fields: [bookingId], references: [id], name: "SeatBooking")
 }
 
 model Booking {
@@ -51,8 +51,8 @@ model Booking {
   session          Session  @relation(fields: [sessionId], references: [id])
   userId           Int
   user             User     @relation(fields: [userId], references: [id])
-  seats            Seat[]
-  status           String   @default("reserved") 
-  reservationExpiry DateTime? 
+  seats            Seat[]   @relation(name: "SeatBooking")
+  status           String   @default("reserved")
+  reservationExpiry DateTime?
   createdAt        DateTime @default(now())
 }

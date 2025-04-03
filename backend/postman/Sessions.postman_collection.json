@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "3809ce0d-95d9-44af-bb01-9b6f980bf412",
+		"name": "Sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26306869"
+	},
+	"item": [
+		{
+			"name": "Post Sessions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTc0MzY4NzY2NiwiZXhwIjoxNzQzNjkxMjY2fQ.THnmhIa9CV86n0AalzO2FJAdmCjJvnlT7o2S302p4pE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"movieId\": 2,\r\n  \"startTime\": \"2025-04-03T20:00:00Z\",\r\n  \"totalRows\": 5,\r\n  \"seatsPerRow\": 8\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/sessions",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sessions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/sessions",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  Session",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/sessions/3",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sessions",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve Session",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTc0MzY4NzY2NiwiZXhwIjoxNzQzNjkxMjY2fQ.THnmhIa9CV86n0AalzO2FJAdmCjJvnlT7o2S302p4pE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionId\": 3,\r\n  \"seatIds\": [89]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/sessions/3/reserve",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sessions",
+						"3",
+						"reserve"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

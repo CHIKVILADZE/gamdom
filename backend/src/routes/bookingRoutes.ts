@@ -5,6 +5,6 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 const router = Router();
 
 router.post('/sessions/:id/reserve', authMiddleware, bookingController.reserveSeats);
-router.post('/bookings/:bookingId/confirm', authMiddleware, bookingController.confirmBooking);
+router.post('/:bookingId/confirm', authMiddleware, bookingController.confirmBooking);
 
 export default router;

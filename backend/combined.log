@@ -55,3 +55,20 @@
 {"level":"info","message":"Seats for booking 10 set to available"}
 {"level":"info","message":"Booking 10 set to expired"}
 {"level":"info","message":"Booking 10 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 11 with timeoutMs: 119985"}
+{"level":"info","message":"User 7 reserved seats 90"}
+{"level":"info","message":"Timer executed for booking 11 at 2025-04-03T14:18:21.342Z"}
+{"level":"info","message":"Seats for booking 11 set to available"}
+{"level":"info","message":"Booking 11 set to expired"}
+{"level":"info","message":"Booking 11 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 12 with timeoutMs: 119995"}
+{"level":"info","message":"User 7 reserved seats 90"}
+{"level":"info","message":"Setting timer for booking 13 with timeoutMs: 119988"}
+{"level":"info","message":"User 7 reserved seats 89"}
+{"level":"info","message":"Timer executed for booking 12 at 2025-04-03T14:21:13.909Z"}
+{"level":"info","message":"Seats for booking 12 set to available"}
+{"level":"info","message":"Booking 12 set to expired"}
+{"level":"info","message":"Booking 12 expired and seats freed"}
+{"level":"info","message":"User 7 confirmed booking 13"}
+{"level":"info","message":"Timer executed for booking 13 at 2025-04-03T14:23:01.809Z"}
+{"level":"info","message":"Booking 13 not expired. Status: booked, Expiry: null"}

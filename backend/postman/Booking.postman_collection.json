@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "4b21f694-7f21-40b5-90eb-63dc0300b553",
+		"name": "Booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26306869"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTc0MzY4ODQyNSwiZXhwIjoxNzQzNjkyMDI1fQ.aAlGwV5AmKQ22VF7jHG4oFmwNgwTYFo5pVHaSk2Muyk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/bookings/13/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"bookings",
+						"13",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
