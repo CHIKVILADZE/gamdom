@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { JwtPayload } from '../../../shared/interface/interfaces';
 
 declare global {
   namespace Express {
@@ -9,9 +10,7 @@ declare global {
   }
 }
 
-interface JwtPayload {
-  userId: number;
-}
+
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];

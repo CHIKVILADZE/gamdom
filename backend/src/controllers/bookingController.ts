@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import * as bookingService from '../services/bookingService';
+import { createBookingService } from '../services/bookingService';
+import prisma from '../prisma/prisma';
+
+const bookingService = createBookingService(prisma);
 
 export const reserveSeats = async (req: Request, res: Response) => {
   try {

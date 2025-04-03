@@ -1,14 +1,8 @@
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
+import { sessionSchema } from '../../../shared/schema/schemas';
+import prisma from '../prisma/prisma'
 
-const prisma = new PrismaClient();
 
-const sessionSchema = z.object({
-  movieId: z.number(),
-  startTime: z.string().datetime(),
-  totalRows: z.number().min(1),
-  seatsPerRow: z.number().min(1),
-});
 
 export const createSession = async (data: z.infer<typeof sessionSchema>) => {
   const { movieId, startTime, totalRows, seatsPerRow } = sessionSchema.parse(data);

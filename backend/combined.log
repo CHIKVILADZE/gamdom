@@ -1,0 +1,57 @@
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"info","message":"Setting timer for booking 2 with timeoutMs: 9973"}
+{"level":"info","message":"User 2 reserved seats 6,7 for session 2"}
+{"level":"info","message":"Timer executed for booking 2 at 2025-04-02T12:56:23.037Z"}
+{"level":"info","message":"Seats for booking 2 set to available"}
+{"level":"info","message":"Booking 2 set to expired"}
+{"level":"info","message":"Booking 2 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 3 with timeoutMs: 9995"}
+{"level":"info","message":"User 2 reserved seats 6,7 for session 2"}
+{"level":"info","message":"Timer executed for booking 3 at 2025-04-02T12:56:53.831Z"}
+{"level":"info","message":"Seats for booking 3 set to available"}
+{"level":"info","message":"Booking 3 set to expired"}
+{"level":"info","message":"Booking 3 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 4 with timeoutMs: 9987"}
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"info","message":"Timer executed for booking 4 at 2025-04-02T12:58:22.850Z"}
+{"level":"info","message":"Seats for booking 4 set to available"}
+{"level":"info","message":"Booking 4 set to expired"}
+{"level":"info","message":"Booking 4 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 5 with timeoutMs: 9996"}
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"info","message":"Timer executed for booking 5 at 2025-04-02T12:58:45.713Z"}
+{"level":"info","message":"Seats for booking 5 set to available"}
+{"level":"info","message":"Booking 5 set to expired"}
+{"level":"info","message":"Booking 5 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 6 with timeoutMs: 9980"}
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"info","message":"Timer executed for booking 6 at 2025-04-02T13:00:16.898Z"}
+{"level":"info","message":"Seats for booking 6 set to available"}
+{"level":"info","message":"Booking 6 set to expired"}
+{"level":"info","message":"Booking 6 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 7 with timeoutMs: 9995"}
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"info","message":"Timer executed for booking 7 at 2025-04-02T13:00:56.896Z"}
+{"level":"info","message":"Seats for booking 7 set to available"}
+{"level":"info","message":"Booking 7 set to expired"}
+{"level":"info","message":"Booking 7 expired and seats freed"}
+{"level":"info","message":"Setting timer for booking 8 with timeoutMs: 106009"}
+{"level":"info","message":"User 2 reserved seats 1,2,3 for session 2"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"error","message":"Error reserving seats for user 2: Error: Some seats are not available"}
+{"level":"info","message":"Setting timer for booking 9 with timeoutMs: 119986"}
+{"level":"info","message":"User 2 reserved seats 10"}
+{"level":"info","message":"Setting timer for booking 10 with timeoutMs: 119992"}
+{"level":"info","message":"User 2 reserved seats 5,6"}
+{"level":"info","message":"Timer executed for booking 9 at 2025-04-02T16:02:22.334Z"}
+{"level":"info","message":"Seats for booking 9 set to available"}
+{"level":"info","message":"Booking 9 set to expired"}
+{"level":"info","message":"Booking 9 expired and seats freed"}
+{"level":"info","message":"Timer executed for booking 10 at 2025-04-02T16:03:37.444Z"}
+{"level":"info","message":"Seats for booking 10 set to available"}
+{"level":"info","message":"Booking 10 set to expired"}
+{"level":"info","message":"Booking 10 expired and seats freed"}
