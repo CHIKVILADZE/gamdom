@@ -1,7 +1,7 @@
-import { createBookingService } from '../../../src/services/bookingService';
+import { createBookingService } from '../../services/bookingService';
 import { prismaMock } from '../mocks/prismaClientMock';
-import { RESERVATION_TIMEOUT_MS, SeatStatus } from '../../../../shared/constants/constants';
-import { reserveSchema } from '../../../../shared/schema/schemas';
+import { RESERVATION_TIMEOUT_MS, SeatStatus } from '@shared/constants/constants';
+import { reserveSchema } from '@shared/schema/schemas';
 
 jest.mock('../../utils/timer', () => ({
   setReservationTimer: jest.fn(),
@@ -18,7 +18,7 @@ jest.mock('../../index', () => ({
   broadcastSeatUpdate: jest.fn(),
 }));
 
-jest.mock('../../../../shared/schema/schemas', () => ({
+jest.mock('@shared/schema/schemas', () => ({
   reserveSchema: {
     parse: jest.fn(),
   },

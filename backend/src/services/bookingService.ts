@@ -3,9 +3,9 @@ import { z } from 'zod';
 import { setReservationTimer } from '../utils/timer';
 import logger from '../utils/logger';
 import { broadcastSeatUpdate } from '../index';
-import { reserveSchema } from '../../../shared/schema/schemas';
-import { RESERVATION_TIMEOUT_MS, SeatStatus } from '../../../shared/constants/constants';
-import { Booking } from '../../../shared/interface/interfaces';
+import { reserveSchema } from '@shared/schema/schemas';
+import { RESERVATION_TIMEOUT_MS, SeatStatus } from '@shared/constants/constants';
+import { Booking } from '@shared/interface/interfaces';
 
 export const createBookingService = (prisma: PrismaClient) => {
   const reserveSeats = async (

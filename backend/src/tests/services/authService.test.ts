@@ -2,7 +2,7 @@ import { signup, signin } from '../../services/authService';
 import { prismaMock } from '../mocks/prismaClientMock';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { signupSchema, signinSchema } from '../../../../shared/schema/schemas';
+import { signupSchema, signinSchema } from '@shared/schema/schemas';
 import { userMock } from '../mocks/authMocks';
 
 process.env.JWT_SECRET = 'test-secret'; 

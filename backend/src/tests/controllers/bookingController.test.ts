@@ -1,6 +1,6 @@
 import { reserveSeats as mockReserveSeats, confirmBooking as mockConfirmBooking } from '../mocks/bookingMocks';
 
-jest.mock('../../../src/services/bookingService', () => ({
+jest.mock('../../services/bookingService', () => ({
   createBookingService: () => ({
     reserveSeats: mockReserveSeats,
     confirmBooking: mockConfirmBooking,

@@ -4,15 +4,18 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "rootDir": "../",
-    "outDir": "./dist",
+    "rootDir": "../",                            
+    "outDir": "./dist",                       
     "sourceMap": true,
-    "baseUrl": ".",                         
+    "baseUrl": ".",                           
     "paths": {
-      "zod": ["../backend/node_modules/zod"] 
+      "@shared/*": ["../shared/*"]             
     },
-    "moduleResolution": "node"             
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*", "types/**/*", "../shared/**/*"], 
+  "include": [
+    "src/**/*",
+    "../shared/**/*"                        
+  ],
   "exclude": ["node_modules"]
 }

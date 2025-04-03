@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Movie } from '../../../shared/interface/interfaces';
+import { Movie } from '@shared/interface/interfaces';
 import movieService from '../services/moviesService'; 
 
 export const getAllMovies = async (req: Request, res: Response): Promise<void> => {

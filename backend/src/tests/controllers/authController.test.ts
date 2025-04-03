@@ -1,8 +1,8 @@
-import { signup, signin } from '../../../src/controllers/authController';
-import * as authService from '../../../src/services/authService';
+import { signup, signin } from '../../controllers/authController';
+import * as authService from '../../services/authService';
 import httpMocks from 'node-mocks-http';
 
-jest.mock('../../../src/services/authService');
+jest.mock('../../services/authService');
 
 describe('authController', () => {
   describe('signup', () => {

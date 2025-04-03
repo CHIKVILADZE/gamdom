@@ -1,12 +1,12 @@
 import httpMocks from 'node-mocks-http';
-import * as sessionService from '../../../src/services/sessionService';
+import * as sessionService from '../../services/sessionService';
 import {
   createSession,
   getSessions,
   getSessionById,
-} from '../../../src/controllers/sessionController';
+} from '../../controllers/sessionController';
 
-jest.mock('../../../src/services/sessionService');
+jest.mock('../../services/sessionService');
 
 describe('sessionController', () => {
   beforeEach(() => {

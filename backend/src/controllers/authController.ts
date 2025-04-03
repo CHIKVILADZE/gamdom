@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as authService from '../services/authService';
-import { signupSchema } from '../../../shared/schema/schemas';
+import { signupSchema } from '@shared/schema/schemas';
 import prisma from '../prisma/prisma';
 
 export const signup = async (

@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import http from 'http';
 import { AddressInfo } from 'net';
 import express from 'express';
-import { SeatStatus } from '../../../../shared/constants/constants';
+import { SeatStatus } from '@shared/constants/constants';
 
 let server: http.Server;
 let wsClient: WebSocket;
@@ -14,7 +14,6 @@ describe('WebSocket Server', () => {
     const app = express();
     server = http.createServer(app);
 
-    // Setup WebSocket server like your main app
     const wss = new WebSocket.Server({ server });
 
     wss.on('connection', (ws) => {
@@ -27,7 +26,6 @@ describe('WebSocket Server', () => {
       wsClient.on('open', () => done());
     });
 
-    // 👇 Expose broadcast from inside the test manually
     (global as any).broadcastSeatUpdate = (sessionId: number, seatId: number, status: SeatStatus) => {
       wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
@@ -53,7 +51,6 @@ describe('WebSocket Server', () => {
       done();
     });
 
-    // Call the broadcast function
     (global as any).broadcastSeatUpdate(1, 2, 'reserved');
   });
 });

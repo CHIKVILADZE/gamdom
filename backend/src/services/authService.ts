@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { signinSchema, signupSchema } from '../../../shared/schema/schemas';
+import { signinSchema, signupSchema } from '@shared/schema/schemas';
 import { z } from 'zod';
 
 export const signup = async (

@@ -1,6 +1,5 @@
-import { createSession, getSessions, getSessionById } from '../../../src/services/sessionService';
+import { createSession, getSessions, getSessionById } from '../../services/sessionService';
 import { prismaMock } from '../mocks/prismaClientMock';
-import { sessionSchema } from '../../../../shared/schema/schemas';
 
 
 describe('sessionService', () => {

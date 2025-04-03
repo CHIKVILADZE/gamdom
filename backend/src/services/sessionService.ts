@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { sessionSchema } from '../../../shared/schema/schemas';
+import { sessionSchema } from '@shared/schema/schemas';
 import prisma from '../prisma/prisma'
 
 

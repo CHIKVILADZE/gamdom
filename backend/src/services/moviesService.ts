@@ -1,4 +1,4 @@
-import { Movie } from '../../../shared/interface/interfaces';
+import { Movie } from '@shared/interface/interfaces';
 import prisma from '../prisma/prisma';
 
 

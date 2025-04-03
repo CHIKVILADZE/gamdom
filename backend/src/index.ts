@@ -7,7 +7,7 @@ import authRoutes from './routes/authRoutes';
 import sessionRoutes from './routes/sessionRoutes';
 import bookingRoutes from './routes/bookingRoutes';
 import { errorMiddleware } from './middlewares/errorMiddleware';
-import { SeatStatus } from '../../shared/constants/constants';
+import { SeatStatus } from '@shared/constants/constants';
 import moviesRoutes from './routes/movieRoutes';
 
 dotenv.config();

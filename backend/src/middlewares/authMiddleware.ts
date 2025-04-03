@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { JwtPayload } from '../../../shared/interface/interfaces';
+import { JwtPayload } from '@shared/interface/interfaces';
 
 declare global {
   namespace Express {
