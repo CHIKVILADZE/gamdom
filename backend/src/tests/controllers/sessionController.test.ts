@@ -6,7 +6,6 @@ import {
   getSessionById,
 } from '../../../src/controllers/sessionController';
 
-// ✅ Mock sessionService functions
 jest.mock('../../../src/services/sessionService');
 
 describe('sessionController', () => {
