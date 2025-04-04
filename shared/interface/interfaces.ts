@@ -46,6 +46,7 @@ export interface Session {
   movieId: number;
   startTime: Date;
   totalRows: number;
+  movie: Movie;   
   seatsPerRow: number;
   seats?: Seat[];
   bookings?: Booking[];

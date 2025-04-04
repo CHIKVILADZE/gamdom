@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupData } from "../../../shared/schema/schemas";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 export default function SignUp() {
   const {
@@ -11,9 +12,17 @@ export default function SignUp() {
   } = useForm<SignupData>({
     resolver: zodResolver(signupSchema)
   });
+  const navigate = useNavigate();
 
-  const onSubmit = (data: SignupData) => {
-    console.log("Sign Up:", data);
+
+  const onSubmit =async (data: SignupData) => {
+    try {
+      const response = await api.post("/auth/signup", data);
+      console.log("Signed up:", response.data);
+      navigate("/signin");
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Signup failed");
+    }
   };
 
   return (

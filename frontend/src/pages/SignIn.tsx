@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signinSchema, SigninData } from "../../../shared/schema/schemas" 
-import { Link } from "react-router-dom";
+import { signinSchema, SigninData } from "../../../shared/schema/schemas";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 export default function SignIn() {
   const {
@@ -12,8 +13,17 @@ export default function SignIn() {
     resolver: zodResolver(signinSchema)
   });
 
-  const onSubmit = (data: SigninData) => {
-    console.log("Sign In:", data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: SigninData) => {
+    try {
+      const response = await api.post("/auth/signin", data);
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      navigate("/home"); 
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Sign in failed");
+    }
   };
 
   return (
