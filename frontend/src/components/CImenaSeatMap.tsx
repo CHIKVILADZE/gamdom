@@ -24,7 +24,6 @@ const CinemaSeatMap: React.FC = () => {
   const [bookingId, setBookingId] = useState<number | null>(null);
   const [message, setMessage] = useState<MessageState>({ text: '', type: '' });
 
-  // Fetch all sessions
   useEffect(() => {
     const fetchSessions = async () => {
       setLoading(true);
@@ -43,7 +42,6 @@ const CinemaSeatMap: React.FC = () => {
     fetchSessions();
   }, []);
 
-  // Fetch specific session by ID
   useEffect(() => {
     if (!selectedSessionId) return;
     const fetchSession = async () => {
@@ -66,7 +64,6 @@ const CinemaSeatMap: React.FC = () => {
     fetchSession();
   }, [selectedSessionId]);
 
-  // 🧠 WebSocket setup
   useEffect(() => {
     if (!session) return;
 
@@ -99,7 +96,6 @@ const CinemaSeatMap: React.FC = () => {
     };
   }, [session]);
 
-  // Toggle seat select/unselect
   const toggleSeat = (seatId: number, status: SeatStatus) => {
     if (status !== "available" || loading) return;
     setSelectedSeats(prev =>
@@ -107,7 +103,6 @@ const CinemaSeatMap: React.FC = () => {
     );
   };
 
-  // Reserve selected seats
   const handleReserve = async () => {
     if (!session || selectedSeats.length === 0) {
       setMessage({ text: 'Please select at least one seat', type: 'error' });
