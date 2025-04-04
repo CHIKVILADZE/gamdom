@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   db:
     image: postgres:15
@@ -30,6 +32,17 @@ services:
       DATABASE_URL: postgres://postgres:giorgi123@db:5432/cinema_booking
       JWT_SECRET: your-secret-key
       PORT: 5000
+
+  frontend:
+    build:
+      context: . 
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:5000
 
 volumes:
   postgres-data:

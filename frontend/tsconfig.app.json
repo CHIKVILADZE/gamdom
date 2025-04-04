@@ -7,8 +7,8 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "paths": {
-      "@shared/*": ["../shared/*"]
-    },
+    "@shared/*": ["./shared/*"]
+},
 
     /* Bundler mode */
     "moduleResolution": "bundler",

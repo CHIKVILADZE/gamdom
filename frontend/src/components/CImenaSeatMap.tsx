@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import api from "../utils/api";
-import { Session, Seat } from "../../../shared/interface/interfaces";
-import { SeatStatus } from "../../../shared/constants/constants";
+import { Session } from "@shared/interface/interfaces";
+import { SeatStatus } from "@shared/constants/constants";
+import {
+  getAllSessions,
+  getSessionById,
+  reserveSeats,
+  confirmBooking
+} from "../services/sessionService";
 
-// Component imports
 import SessionSelector from "./SessionSelector";
 import SessionInfo from "./SessionInfo";
 import MessageAlert from "./MessageAlert";
@@ -28,11 +32,9 @@ const CinemaSeatMap: React.FC = () => {
     const fetchSessions = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("token");
-        const res = await api.get("/sessions", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setSessions(res.data);
+        const token = localStorage.getItem("token")!;
+        const res = await getAllSessions(token);
+        setSessions(res);
       } catch (err) {
         setMessage({ text: "Failed to fetch sessions.", type: "error" });
       } finally {
@@ -47,11 +49,9 @@ const CinemaSeatMap: React.FC = () => {
     const fetchSession = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("token");
-        const res = await api.get(`/sessions/${selectedSessionId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setSession(res.data);
+        const token = localStorage.getItem("token")!;
+        const res = await getSessionById(selectedSessionId, token);
+        setSession(res);
         setSelectedSeats([]);
         setBookingId(null);
         setMessage({ text: '', type: '' });
@@ -69,17 +69,14 @@ const CinemaSeatMap: React.FC = () => {
 
     const socket = new WebSocket("ws://localhost:5000");
 
-    socket.onopen = () => {
-      console.log("✅ WebSocket connected");
-    };
+    socket.onopen = () => console.log(" WebSocket connected");
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
       if (data.sessionId === session.id) {
         setSession((prev) => {
           if (!prev) return prev;
-          const updatedSeats = prev.seats?.map((seat) =>
+          const updatedSeats = prev.seats?.map(seat =>
             seat.id === data.seatId ? { ...seat, status: data.status } : seat
           );
           return { ...prev, seats: updatedSeats };
@@ -87,13 +84,9 @@ const CinemaSeatMap: React.FC = () => {
       }
     };
 
-    socket.onclose = () => {
-      console.log("❌ WebSocket disconnected");
-    };
+    socket.onclose = () => console.log("WebSocket disconnected");
 
-    return () => {
-      socket.close();
-    };
+    return () => socket.close();
   }, [session]);
 
   const toggleSeat = (seatId: number, status: SeatStatus) => {
@@ -113,23 +106,13 @@ const CinemaSeatMap: React.FC = () => {
     setMessage({ text: '', type: '' });
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await api.post(
-        `/sessions/${session.id}/reserve`,
-        {
-          sessionId: session.id,
-          seatIds: selectedSeats,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setBookingId(res.data.id);
+      const token = localStorage.getItem("token")!;
+      const res = await reserveSeats(session.id, selectedSeats, token);
+      setBookingId(res.id);
 
-      const updated = await api.get(`/sessions/${session.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setSession(updated.data);
+      const updated = await getSessionById(session.id, token);
+      setSession(updated);
+
       setMessage({ text: 'Seats reserved! Please confirm your booking.', type: 'success' });
     } catch (err) {
       setMessage({ text: 'Failed to reserve seats.', type: 'error' });
@@ -145,18 +128,12 @@ const CinemaSeatMap: React.FC = () => {
     setMessage({ text: '', type: '' });
 
     try {
-      const token = localStorage.getItem("token");
-      await api.post(
-        `/bookings/${bookingId}/confirm`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const token = localStorage.getItem("token")!;
+      await confirmBooking(bookingId, token);
 
-      const updated = await api.get(`/sessions/${session.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const updated = await getSessionById(session.id, token);
+      setSession(updated);
 
-      setSession(updated.data);
       setBookingId(null);
       setSelectedSeats([]);
       setMessage({ text: 'Booking confirmed! Enjoy the movie.', type: 'success' });
@@ -199,21 +176,13 @@ const CinemaSeatMap: React.FC = () => {
 
           <div className="text-center">
             {selectedSeats.length > 0 && !bookingId && (
-              <button
-                className="btn btn-primary me-2"
-                onClick={handleReserve}
-                disabled={loading}
-              >
+              <button className="btn btn-primary me-2" onClick={handleReserve} disabled={loading}>
                 {loading ? 'Processing...' : `Reserve (${selectedSeats.length} seat${selectedSeats.length > 1 ? 's' : ''})`}
               </button>
             )}
 
             {bookingId && (
-              <button
-                className="btn btn-success"
-                onClick={handleConfirm}
-                disabled={loading}
-              >
+              <button className="btn btn-success" onClick={handleConfirm} disabled={loading}>
                 {loading ? 'Processing...' : 'Confirm Booking'}
               </button>
             )}

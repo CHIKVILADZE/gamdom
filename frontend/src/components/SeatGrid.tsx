@@ -1,6 +1,6 @@
 import React from 'react';
-import { Seat } from "../../../shared/interface/interfaces";
-import { SeatStatus } from "../../../shared/constants/constants";
+import { Seat } from "@shared/interface/interfaces";
+import { SeatStatus } from "@shared/constants/constants";
 
 interface Props {
   seats: Seat[];

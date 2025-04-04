@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signinSchema, SigninData } from "../../../shared/schema/schemas";
+import { signinSchema, SigninData } from "@shared/schema/schemas";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 

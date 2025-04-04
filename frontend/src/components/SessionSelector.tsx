@@ -1,5 +1,5 @@
 import React from 'react';
-import { Session } from "../../../shared/interface/interfaces";
+import { Session } from "@shared/interface/interfaces";
 
 interface Props {
   sessions: Session[];
@@ -19,7 +19,7 @@ const SessionSelector: React.FC<Props> = ({ sessions, selectedSessionId, onChang
         <option value="" disabled>Select session</option>
         {sessions.map(s => (
           <option key={s.id} value={s.id}>
-            {`${s.movie.title} - ${new Date(s.startTime).toLocaleString()}`}
+            {`${s.movie?.title} - ${new Date(s.startTime).toLocaleString()}`}
           </option>
         ))}
       </select>
