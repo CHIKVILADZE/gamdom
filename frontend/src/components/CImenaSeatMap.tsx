@@ -24,6 +24,7 @@ const CinemaSeatMap: React.FC = () => {
   const [bookingId, setBookingId] = useState<number | null>(null);
   const [message, setMessage] = useState<MessageState>({ text: '', type: '' });
 
+  // Fetch all sessions
   useEffect(() => {
     const fetchSessions = async () => {
       setLoading(true);
@@ -42,6 +43,7 @@ const CinemaSeatMap: React.FC = () => {
     fetchSessions();
   }, []);
 
+  // Fetch specific session by ID
   useEffect(() => {
     if (!selectedSessionId) return;
     const fetchSession = async () => {
@@ -64,6 +66,40 @@ const CinemaSeatMap: React.FC = () => {
     fetchSession();
   }, [selectedSessionId]);
 
+  // 🧠 WebSocket setup
+  useEffect(() => {
+    if (!session) return;
+
+    const socket = new WebSocket("ws://localhost:5000");
+
+    socket.onopen = () => {
+      console.log("✅ WebSocket connected");
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (data.sessionId === session.id) {
+        setSession((prev) => {
+          if (!prev) return prev;
+          const updatedSeats = prev.seats?.map((seat) =>
+            seat.id === data.seatId ? { ...seat, status: data.status } : seat
+          );
+          return { ...prev, seats: updatedSeats };
+        });
+      }
+    };
+
+    socket.onclose = () => {
+      console.log("❌ WebSocket disconnected");
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, [session]);
+
+  // Toggle seat select/unselect
   const toggleSeat = (seatId: number, status: SeatStatus) => {
     if (status !== "available" || loading) return;
     setSelectedSeats(prev =>
@@ -71,6 +107,7 @@ const CinemaSeatMap: React.FC = () => {
     );
   };
 
+  // Reserve selected seats
   const handleReserve = async () => {
     if (!session || selectedSeats.length === 0) {
       setMessage({ text: 'Please select at least one seat', type: 'error' });
@@ -146,7 +183,6 @@ const CinemaSeatMap: React.FC = () => {
       />
 
       {session && <SessionInfo session={session} />}
-
       <MessageAlert text={message.text} type={message.type} />
 
       {session && (
