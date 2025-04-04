@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -11,128 +12,132 @@ async function main() {
 
   const user1 = await prisma.user.create({
     data: {
-      email: "Giorgi@example.com",
-      password: "password123", 
+      fullName: "Giorgi",
+      email: "giorgi@example.com",
+      password: await bcrypt.hash("password123", 10),
     },
   });
 
   const user2 = await prisma.user.create({
     data: {
-      email: "Johny@example.com",
-      password: "password456",
+      fullName: "Interviewer",
+      email: "interviewer@example.com",
+      password: await bcrypt.hash("password123", 10),
     },
   });
 
   const movie1 = await prisma.movie.create({
     data: {
-      title: "The Hobbit",
+      title: "The Matrix",
       duration: 136,
     },
   });
 
   const movie2 = await prisma.movie.create({
     data: {
-      title: "Inception",
-      duration: 148,
+      title: "Interstellar",
+      duration: 169,
     },
   });
 
   const session1 = await prisma.session.create({
     data: {
       movieId: movie1.id,
-      startTime: new Date("2025-04-02T19:00:00Z"),
-      totalRows: 5,
-      seatsPerRow: 10,
+      startTime: new Date("2025-04-04T18:00:00Z"),
+      totalRows: 3,
+      seatsPerRow: 5,
     },
   });
 
   const session2 = await prisma.session.create({
     data: {
       movieId: movie2.id,
-      startTime: new Date("2025-04-02T21:00:00Z"),
+      startTime: new Date("2025-04-04T21:00:00Z"),
       totalRows: 3,
-      seatsPerRow: 8,
+      seatsPerRow: 5,
     },
   });
 
-  const seats1 = [];
-  for (let row = 1; row <= session1.totalRows; row++) {
-    for (let seatNum = 1; seatNum <= session1.seatsPerRow; seatNum++) {
-      seats1.push({
-        sessionId: session1.id,
-        row,
-        seatNumber: seatNum,
-        status: "available",
-      });
+  // Generate seats
+  const makeSeats = (
+    sessionId: number,
+    rows: number,
+    perRow: number
+  ): Prisma.SeatCreateManyInput[] => {
+    const seats: Prisma.SeatCreateManyInput[] = [];
+  
+    for (let r = 1; r <= rows; r++) {
+      for (let s = 1; s <= perRow; s++) {
+        seats.push({ sessionId, row: r, seatNumber: s, status: "available" });
+      }
     }
-  }
-  await prisma.seat.createMany({ data: seats1 });
+  
+    return seats;
+  };
 
-  const seats2 = [];
-  for (let row = 1; row <= session2.totalRows; row++) {
-    for (let seatNum = 1; seatNum <= session2.seatsPerRow; seatNum++) {
-      seats2.push({
-        sessionId: session2.id,
-        row,
-        seatNumber: seatNum,
-        status: "available",
-      });
-    }
-  }
-  await prisma.seat.createMany({ data: seats2 });
+  await prisma.seat.createMany({ data: makeSeats(session1.id, 3, 5) });
+  await prisma.seat.createMany({ data: makeSeats(session2.id, 3, 5) });
 
-  const session1Seats = await prisma.seat.findMany({
-    where: { sessionId: session1.id },
-    take: 2, 
+  // Fetch some seats to reserve
+  const session2Available = await prisma.seat.findMany({
+    where: { sessionId: session2.id },
+    orderBy: { id: 'asc' },
+    take: 2,
   });
 
-  await prisma.booking.create({
+  const reservationExpiry = new Date(Date.now() + 2 * 60 * 1000); // 2 minutes from now
+
+  const reservedBooking = await prisma.booking.create({
+    data: {
+      sessionId: session2.id,
+      userId: user2.id,
+      status: "reserved",
+      reservationExpiry,
+      seats: {
+        connect: session2Available.map((s) => ({ id: s.id })),
+      },
+    },
+  });
+
+  await prisma.seat.updateMany({
+    where: { id: { in: session2Available.map(s => s.id) } },
+    data: { status: "reserved", bookingId: reservedBooking.id },
+  });
+
+  // Fetch some seats to book directly
+  const session1Available = await prisma.seat.findMany({
+    where: { sessionId: session1.id },
+    orderBy: { id: 'asc' },
+    take: 2,
+  });
+
+  const booked = await prisma.booking.create({
     data: {
       sessionId: session1.id,
       userId: user1.id,
       status: "booked",
       seats: {
-        connect: session1Seats.map((seat) => ({ id: seat.id })),
+        connect: session1Available.map((s) => ({ id: s.id })),
       },
-      reservationExpiry: null, 
-    },
-  });
-
-  const session2Seats = await prisma.seat.findMany({
-    where: { sessionId: session2.id },
-    take: 1, 
-  });
-
-  await prisma.booking.create({
-    data: {
-      sessionId: session2.id,
-      userId: user2.id,
-      status: "reserved",
-      seats: {
-        connect: session2Seats.map((seat) => ({ id: seat.id })),
-      },
-      reservationExpiry: new Date(Date.now() + 2 * 60 * 1000),
     },
   });
 
   await prisma.seat.updateMany({
-    where: { id: { in: session1Seats.map((s) => s.id) } },
-    data: { status: "booked" },
+    where: { id: { in: session1Available.map(s => s.id) } },
+    data: { status: "booked", bookingId: booked.id },
   });
 
-  await prisma.seat.updateMany({
-    where: { id: { in: session2Seats.map((s) => s.id) } },
-    data: { status: "reserved" },
-  });
-
-  console.log("Database seeded successfully!");
+  console.log("🎬 Movies seeded:", movie1.title, movie2.title);
+  console.log("🎟 Reserved seat IDs:", session2Available.map(s => s.id));
+  console.log("✅ Booked seat IDs:", session1Available.map(s => s.id));
+  console.log("📅 Reservation expiry:", reservationExpiry.toISOString());
+  console.log("🚀 Seeding completed!");
 }
 
 main()
   .catch((e) => {
     console.error(e);
-    process.exit(1);
-  })
+  ;})
   .finally(async () => {
     await prisma.$disconnect();
   });

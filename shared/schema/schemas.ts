@@ -9,7 +9,7 @@ export type SignupData = z.infer<typeof signupSchema>;
 
 export const signinSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(3, "Password must be at least 3 characters"),
 });
 export type SigninData = z.infer<typeof signinSchema>;
 
