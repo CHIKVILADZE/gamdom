@@ -1,6 +1,6 @@
 import { signup, signin } from '../../services/authService';
 import { prismaMock } from '../mocks/prismaClientMock';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { signupSchema, signinSchema } from '@shared/schema/schemas';
 import { userMock } from '../mocks/authMocks';

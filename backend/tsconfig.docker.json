@@ -4,18 +4,18 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "rootDir": "../",
+    "rootDir": ".",
     "outDir": "./dist",
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["./shared/*"]
     },
     "moduleResolution": "node"
   },
   "include": [
     "src/**/*",
-    "../shared/**/*"
+    "shared/**/*"
   ],
   "exclude": ["node_modules"]
 }

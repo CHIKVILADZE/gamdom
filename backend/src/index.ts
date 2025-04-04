@@ -47,6 +47,6 @@ export const broadcastSeatUpdate = (sessionId: number, seatId: number, status: S
   });
 };
 
-server.listen(5000, () => {
+server.listen(5000,'0.0.0.0', () => {
   console.log('Server running on portsss 5000');
 });
