@@ -8,51 +8,51 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  fullName  String? 
-  email     String   @unique
-  password  String   
+  id        Int       @id @default(autoincrement())
+  fullName  String?
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
   bookings  Booking[]
-  createdAt DateTime @default(now())
 }
 
 model Movie {
-  id        Int      @id @default(autoincrement())
-  title     String
-  duration  Int      
-  sessions  Session[]
+  id       Int       @id @default(autoincrement())
+  title    String
+  duration Int
+  sessions Session[]
 }
 
 model Session {
-  id            Int      @id @default(autoincrement())
-  movieId       Int
-  movie         Movie    @relation(fields: [movieId], references: [id])
-  startTime     DateTime
-  totalRows     Int
-  seatsPerRow   Int
-  seats         Seat[]
-  bookings      Booking[]
+  id          Int       @id @default(autoincrement())
+  movieId     Int
+  startTime   DateTime
+  totalRows   Int
+  seatsPerRow Int
+  bookings    Booking[]
+  seats       Seat[]
+  movie       Movie     @relation(fields: [movieId], references: [id])
 }
 
 model Seat {
   id         Int      @id @default(autoincrement())
   sessionId  Int
-  session    Session  @relation(fields: [sessionId], references: [id])
   row        Int
   seatNumber Int
   status     String   @default("available")
   bookingId  Int?
-  booking    Booking? @relation(fields: [bookingId], references: [id], name: "SeatBooking")
+  booking    Booking? @relation("SeatBooking", fields: [bookingId], references: [id])
+  session    Session  @relation(fields: [sessionId], references: [id])
 }
 
 model Booking {
-  id               Int      @id @default(autoincrement())
-  sessionId        Int
-  session          Session  @relation(fields: [sessionId], references: [id])
-  userId           Int
-  user             User     @relation(fields: [userId], references: [id])
-  seats            Seat[]   @relation(name: "SeatBooking")
-  status           String   @default("reserved")
+  id                Int       @id @default(autoincrement())
+  sessionId         Int
+  userId            Int
+  status            String    @default("reserved")
   reservationExpiry DateTime?
-  createdAt        DateTime @default(now())
+  createdAt         DateTime  @default(now())
+  session           Session   @relation(fields: [sessionId], references: [id])
+  user              User      @relation(fields: [userId], references: [id])
+  seats             Seat[]    @relation("SeatBooking")
 }
